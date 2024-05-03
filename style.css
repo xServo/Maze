@@ -1,0 +1,24 @@
+#mazeTitle {
+    margin-right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#gameSpace {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.start {
+    color: green;
+}
+.finish {
+    color: blue;
+
+}
+.searched {
+    color: orange;
+}
