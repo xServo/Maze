@@ -8,8 +8,13 @@
 </head>
 <body>
     <h1 id="mazeTitle">Maze</h1>
-    <div id="gameSpace">
-    </div> 
+    <div id="gameSpace"></div> 
     <script src="index.js"></script>
+    <div id="algButtons">
+        <button onclick="initMaze()" id="reset">Reset</button>
+        <button onclick="horizontalSearch()" id="horizontalSearch">Run <br>horizontal search</button>
+        <button onclick="dfs()" id="dfs">Run dfs</button>
+    </div>
+
 </body>
 </html>
