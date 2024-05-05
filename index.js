@@ -10,15 +10,15 @@ const wall = '#';
 let searchTimeout = setTimeout(null, 0);
 let maze = [];
 let explored = [];
+let stack = []; 
 // vars for search alg
 let r = 0;
 let c = 0;
 initMaze();
 // build walls
-maze[0][1] = wall;
-maze[1][1] = wall;
-maze[2][1] = wall;
-maze[3][3] = wall;
+maze[3][1] = wall;
+maze[3][2] = wall;
+maze[4][2] = wall;
 
 // run
 displayMaze();
@@ -34,6 +34,7 @@ function initMaze() {
         maze.push(Array(columns).fill(defaultFill));
     }
     // init explored maze
+    stack = [];
     explored = [];
     for (i=0; i<rows; i++) {
         explored.push(Array(columns).fill(defaultFill));
@@ -46,56 +47,60 @@ function initMaze() {
     displayMaze();
     r = 0;
     c = 0;
-    return maze;
+    maze[r][c];
 }
 // depth-first-search 
 function dfs() {
     displayMaze();
-    //stack[r][c];
-    // check down
-    if ((r+1 < size) && (r+1 >= 0)) {
-        // check agaisnt explored and isnt wall
-        if ((explored[r+1][c] == 0) && (maze[r+1][c] == defaultFill)) {
-            // mark as searched
-            r = r + 1;
-            maze[r][c] = "<span class=searched>" + maze[r][c] + "</span>";
-        }
-    }
-    // check up
-    else if ((r-1 < size) && (r-1 >= 0)) {
-        // check agaisnt explored and isnt wall
-        if ((explored[r-1][c] == 0) && (maze[r-1][c] == defaultFill)) {
-            // mark as searched
-            r = r - 1;
-            maze[r][c] = "<span class=searched>" + maze[r][c] + "</span>";
-        }
-    }
-    // check left
-    else if ((c-1 < size) && (c-1 >= 0)) {
-        // check agaisnt explored and isnt wall
-        if ((explored[r][c-1] == 0) && (maze[r][c-1] == defaultFill)) {
-            // mark as searched
-            c = c - 1;
-            maze[r][c] = "<span class=searched>" + maze[r][c] + "</span>";
-        }
-    }
-    // check right
-    else if ((c+1 < size) && (c+1 >= 0)) {
-        // check agaisnt explored and isnt wall
-        if ((explored[r][c+1] == 0) && (maze[r][c+1] == defaultFill)) {
-            // mark as searched
-            c = c + 1;
-            maze[r][c] = "<span class=searched>" + maze[r][c] + "</span>";
-        }
-    }
 
-    // no solution
-    else {
-        
-    }
-    console.log(r, c);
-
+    // visit and explore
+    // get rc
+    // r, c = stack[stack.length-1][]
+    // mark as searched
+    maze[r][c] = "<span class=searched>" + maze[r][c] + "</span>";
+    stack.pop();
+    console.log("location: " + r, c);
     explored[r][c] = 1;
+    // check if down exists and has not been explored
+    if (r+1 < size && 
+        r+1 >= 0 &&
+        explored[r+1][c] == 0 &&
+        maze[r+1][c] == defaultFill) 
+    {
+        // push the node onto the stack
+        stack.push(r+1,c);
+    }
+    // check if up exists and has not been explored
+    if (r-1 < size && 
+        r-1 >= 0 &&
+        explored[r-1][c] == 0 &&
+        maze[r-1][c] == defaultFill) 
+    {
+        // push the node onto the stack
+        stack.push(r-1,c);
+    }
+    // check if left exists and has not been explored
+    if (c-1 < size && 
+        c-1 >= 0 &&
+        explored[r][c-1] == 0 &&
+        maze[r][c-1] == defaultFill) 
+    {
+        // push the node onto the stack
+        stack.push(r-1,c);
+    }
+    // check if left exists and has not been explored
+    if (c+1 < size && 
+        c+1 >= 0 &&
+        explored[r][c+1] == 0 &&
+        maze[r][c+1] == defaultFill) 
+    {
+        // push the node onto the stack
+        stack.push(r-1,c);
+    } else {
+        console.log("stuck");
+        stack.pop();
+    }
+    console.log(stack);
     displayMaze();
     searchTimeout = setTimeout(dfs, delay);
 
