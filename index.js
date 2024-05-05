@@ -90,10 +90,9 @@ function dfs() {
     }
 
     // no solution
-    // else {
-    //     console.log("no solution");
-    //     return 1;
-    // }
+    else {
+        
+    }
     console.log(r, c);
 
     explored[r][c] = 1;
